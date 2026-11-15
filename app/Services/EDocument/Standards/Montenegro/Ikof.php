@@ -20,8 +20,9 @@ use RuntimeException;
  * Generates the Montenegro IKOF (IIC) and its signature (IICSignature).
  *
  * Algorithm defined in the Fiscalization service technical specification, section 4.3.2:
- *   1. Concatenate TIN, IssueDateTime, InvNum, BusinUnitCode, TCRCode, SoftCode and TotPrice
- *      with the pipe character (UTF-8, decimal code 124).
+ *   1. Concatenate TIN, IssueDateTime, InvOrdNum, BusinUnitCode, TCRCode, SoftCode and TotPrice
+ *      with the pipe character (UTF-8, decimal code 124). The third value is the plain
+ *      ordinal, for example 9952, not the composite InvNum.
  *   2. Sign the concatenated string with SHA-256 / RSA (RSASSA-PKCS1-v1_5) using the
  *      taxpayer private key. The resulting signature is hex encoded, 512 characters.
  *   3. The IKOF (IIC) is the MD5 hash of the raw signature bytes, hex encoded, 32 characters.
@@ -37,7 +38,7 @@ class Ikof
     public static function concatenate(
         string $tin,
         string $issueDateTime,
-        string $invoiceNumber,
+        string $ordinal,
         string $businessUnitCode,
         string $tcrCode,
         string $softwareCode,
@@ -46,7 +47,7 @@ class Ikof
         return implode('|', [
             $tin,
             $issueDateTime,
-            $invoiceNumber,
+            $ordinal,
             $businessUnitCode,
             $tcrCode,
             $softwareCode,
