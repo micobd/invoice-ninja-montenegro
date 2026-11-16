@@ -63,7 +63,11 @@
 - A read timeout is the most dangerous case: the CIS may have registered the first request.
 - **Confirm:** a test that makes the `Http` fake throw `ConnectionException`, then inspects log rows and the counter.
 
-## 3a. Credit note fiscalization throws a `TypeError` — HIGH, CONFIRMED BY READING, NOT RUN
+## 3a. Credit note fiscalization throws a `TypeError` — HIGH, CONFIRMED BY TEST (2026-11-16)
+
+- Reproduced by `tests/Feature/EInvoice/Montenegro/MontenegroCreditSendToCisTest.php`: `TypeError: SendToCis::persistLog(): Argument #1 ($invoice) must be of type App\Models\Invoice, App\Models\Credit given` (`SendToCis.php:145` → `:152`). The error comes after `Montenegro::run()`, so the ordinal is already reserved.
+- **Fixed (2026-11-16, not committed):** `persistLog()`, `applyResponse()`, `writeActivity()`, `systemLog()` now accept `Invoice|Credit`. The test passes. All 102 Montenegro tests pass.
+- Not covered: credit notes that failed before the fix may have used up ordinals. Check `montenegro_fiscal_logs` and the counter on production data.
 
 - `SendToCis::handle()` loads a `Credit` when `entity_type` is `credit`.
 - `persistLog()` (`SendToCis.php:152-153`), `applyResponse()` (`:223`), `writeActivity()` (`:310`), and `systemLog()` (`:329`) type-hint `Invoice $invoice`.

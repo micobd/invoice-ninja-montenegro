@@ -150,7 +150,7 @@ class SendToCis implements ShouldQueue
     }
 
     private function persistLog(
-        Invoice $invoice,
+        Invoice|Credit $invoice,
         Montenegro $montenegro,
         DocumentKind $kind,
         ?CorrectiveReference $corrective,
@@ -220,7 +220,7 @@ class SendToCis implements ShouldQueue
     /**
      * @param array<string, mixed> $response
      */
-    private function applyResponse(Invoice $invoice, MontenegroFiscalLog $log, array $response): void
+    private function applyResponse(Invoice|Credit $invoice, MontenegroFiscalLog $log, array $response): void
     {
         if ($response['success'] ?? false) {
             $log->fill([
@@ -307,7 +307,7 @@ class SendToCis implements ShouldQueue
         return SystemLog::TYPE_MONTENEGRO_INVOICE;
     }
 
-    private function writeActivity(Invoice $invoice, int $activity_id, string $notes = ''): void
+    private function writeActivity(Invoice|Credit $invoice, int $activity_id, string $notes = ''): void
     {
         $activity = new Activity();
         $activity->user_id = $invoice->user_id;
@@ -326,7 +326,7 @@ class SendToCis implements ShouldQueue
     /**
      * @param array<string, mixed> $data
      */
-    private function systemLog(Invoice $invoice, array $data, int $event_id, int $type_id): void
+    private function systemLog(Invoice|Credit $invoice, array $data, int $event_id, int $type_id): void
     {
         (new SystemLogger(
             $data,
