@@ -10,6 +10,7 @@
 
 - `Montenegro.php:173-181` builds the IKOF string with `$this->invoiceNumber`. That value is the composite `BU/ordinal/year/TCR` (`composeInvoiceNumber()`). The `Ikof` docblock also says "InvNum".
 - The correct field 3 is the plain ordinal (`InvOrdNum`).
+- **2026-11-16, first-hand:** TS v5 section 4.3.2 lists field 3 as "Redni broj računa (Poglavlje 3.7.1.12)". Signing the example with the sample private key printed in TS v5 reproduces the published signature and IIC exactly.
 
 ### Evidence
 

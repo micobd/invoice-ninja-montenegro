@@ -2,6 +2,8 @@
 
 **Datum:** 2026-11-15
 
+> **Ažurirano 2026-11-16:** nalazi su ugrađeni u novu verziju skilla, koja se vodi u posebnom privatnom repou. Za avans (4.A): zvanični XSD opisuje `AdvIIC` kao „IIC of the advance invoice from which part of the invoice is paid“, što podržava tok skilla, ne forka. Za ordinal (4.D): zakon dozvoljava niz „po poslovnoj jedinici ili po ENU“; skill preporučuje jedan niz po ENU i godini (prema MonteFiskal analizi).
+
 Referenca za presudu je zvanični XSD sa servera Uprave:
 `https://efitest.tax.gov.me/fs-v1/eficg-fiscalization-service.xsd` i `https://efi.tax.gov.me/fs-v1/...`.
 Oba fajla su bajt-identična, SHA-256 `242c657173ec62f2193447ebc52e3ef26fc4eaecaf7e335c9b9631935591243a`, preuzeto 2026-11-15.
