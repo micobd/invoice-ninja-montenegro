@@ -170,10 +170,12 @@ class Montenegro extends AbstractService
 
         $this->invoiceNumber = $this->composeInvoiceNumber($this->ordinal);
 
+        // Specification 4.3.2: the third IKOF value is the plain ordinal
+        // (InvOrdNum), not the composite InvNum.
         $payload = Ikof::concatenate(
             $this->settings->tin(),
             $this->issueDateTime,
-            $this->invoiceNumber,
+            (string) $this->ordinal,
             $this->settings->businessUnitCode(),
             $this->settings->tcrCode(),
             $this->settings->softwareCode(),
